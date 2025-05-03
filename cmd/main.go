@@ -2,6 +2,7 @@ package main
 
 import (
 	"go-api/controller"
+	"go-api/usecase"
 
 	"github.com/gin-gonic/gin"
 )
@@ -10,8 +11,10 @@ func main() {
 
 	server := gin.Default()
 
+	//Usecase
+	ProductUsecase := usecase.ProductUsecase{}
 	// Products Controller
-	ProductController := controller.NewProductController()
+	ProductController := controller.NewProductController(ProductUsecase)
 	server.GET("/products", ProductController.GetAllProducts)
 
 	// User Controller
