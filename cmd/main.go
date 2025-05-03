@@ -27,13 +27,15 @@ func main() {
 	// Products Controller
 	ProductController := controller.NewProductController(ProductUsecase)
 	server.GET("/products", ProductController.GetAllProducts)
-	
+	server.POST("/products", ProductController.PostCreateProduct)
+
 	// User Repository
 	UserRepository := repository.NewUserRepository(dbConnection)
 	// User Usecase
 	UserUsecase := usecase.NewUserUsecase(UserRepository)
 	// User Controller
 	UserController := controller.NewUserController(UserUsecase)
+	server.GET("/users", UserController.GetAllUsers)
 	server.GET("/users", UserController.GetAllUsers)
 
 	// Test Controller
