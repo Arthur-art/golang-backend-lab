@@ -3,6 +3,8 @@ package db
 import (
 	"database/sql"
 	"fmt"
+
+	_ "github.com/lib/pq" // PostgreSQL driver
 )
 
 const (
@@ -17,10 +19,12 @@ func ConnectDB() (*sql.DB, error) {
 	// Set up the connection string
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname)
-
+	
+		fmt.Println(psqlInfo)
 	// Connect to the database
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 

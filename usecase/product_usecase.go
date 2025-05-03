@@ -2,18 +2,22 @@ package usecase
 
 import (
 	"go-api/model"
+	"go-api/repository"
 )
 type ProductUsecase struct {
+	productRepository repository.ProductRepository
 }
 
-func NewProductUsecase() *ProductUsecase {
-	return &ProductUsecase{}
+func NewProductUsecase(repository repository.ProductRepository) ProductUsecase {
+	return ProductUsecase{
+		productRepository: repository,
+	}
 }
 
 func (p *ProductUsecase) GetAllProducts() ([]model.Product, error) {
-	products := []model.Product{
-		{ID: 1, Name: "Product 1", Price: 10.0},
-		{ID: 2, Name: "Product 2", Price: 20.0},
+	products, err := p.productRepository.GetAllProducts()
+	if err != nil {
+		return nil, err
 	}
-	return []model.Product(products), nil
+	return products, nil
 }
