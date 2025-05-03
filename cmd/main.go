@@ -20,13 +20,21 @@ func main() {
 	}
 	defer dbConnection.Close()
 
-	//Repository
+	// Product Repository
 	ProductRepository := repository.NewProductRepository(dbConnection)
 	//Usecase
 	ProductUsecase := usecase.NewProductUsecase(ProductRepository)
 	// Products Controller
 	ProductController := controller.NewProductController(ProductUsecase)
 	server.GET("/products", ProductController.GetAllProducts)
+	
+	// User Repository
+	UserRepository := repository.NewUserRepository(dbConnection)
+	// User Usecase
+	UserUsecase := usecase.NewUserUsecase(UserRepository)
+	// User Controller
+	UserController := controller.NewUserController(UserUsecase)
+	server.GET("/users", UserController.GetAllUsers)
 
 	// Test Controller
 	server.GET("/ping", func(c *gin.Context) {
